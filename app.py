@@ -86,5 +86,6 @@ def home():
     return "Welcome to the Numerology API! Use POST /api/users to get predictions."
 
 if __name__ == '__main__':
-    port = int(os.getenv("PORT", 8000))
-    app.run(host='127.0.0.1', port=port)
+    # port = int(os.getenv("PORT", 8000))
+    # app.run(host='127.0.0.1', port=port)
+    app.run()

@@ -57,6 +57,10 @@ app.post('/api/users', async (req, res) => {
     }
 });
 
+app.get('/', (req, res) => {
+    res.send('Welcome to the Numerology API! Use POST /api/users to get predictions.');
+});
+
 // Start server 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => console.log(`Numerology API running on port ${PORT}`));

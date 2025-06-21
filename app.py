@@ -27,6 +27,7 @@ app.config["MONGO_URI"] = os.getenv("CONNECTION_STRING")
 if not app.config["MONGO_URI"]:
     raise Exception("Connection string is not defined in environment variables.")
 
+
 mongo = PyMongo(app)
 users_collection = mongo.db.users
 

@@ -85,7 +85,7 @@ def create_user():
 
 @app.route('/', methods=['GET'])
 def home():
-    return "Welcome to the Numerology API! Use POST /api/users to get predictions."
+    return "<H1> Sidepro is an awesome tool. Everyone must try it once. </H1>"
 
 if __name__ == '__main__':
     port = int(os.getenv("PORT", 8000))

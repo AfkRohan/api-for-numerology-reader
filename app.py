@@ -6,11 +6,12 @@ It uses the following libraries:
 - Flask-PyMongo
 - python-dotenv
 - requests (for calling Google Generative AI API)
+-Special thanks to the Google Generative AI API for generating predictions and Microsoft Github Copilot for code assistance.
 """
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-# from flask_pymongo import PyMongo
+from flask_pymongo import PyMongo
 from dotenv import load_dotenv
 import os
 import requests
@@ -21,13 +22,13 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-# # MongoDB configuration
-# app.config["MONGO_URI"] = os.getenv("CONNECTION_STRING")
-# if not app.config["MONGO_URI"]:
-#     raise Exception("Connection string is not defined in environment variables.")
+# MongoDB configuration
+app.config["MONGO_URI"] = os.getenv("CONNECTION_STRING")
+if not app.config["MONGO_URI"]:
+    raise Exception("Connection string is not defined in environment variables.")
 
-# mongo = PyMongo(app)
-# users_collection = mongo.db.users
+mongo = PyMongo(app)
+users_collection = mongo.db.users
 
 # Google Generative AI API setup
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
@@ -70,12 +71,12 @@ def create_user():
         email = data.get('email')
         # Parse and format dob
         dob_date = datetime.fromisoformat(dob)
-        # user = {
-        #     "name": name,
-        #     "dob": dob_date,
-        #     "email": email
-        # }
-        # users_collection.insert_one(user)
+        user = {
+            "name": name,
+            "dob": dob_date,
+            "email": email
+        }
+        users_collection.insert_one(user)
         prediction = get_numerology_prediction(name, dob_date.strftime("%Y-%m-%d"))
         return jsonify({"prediction": prediction})
     except Exception as e:
